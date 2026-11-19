@@ -131,7 +131,10 @@ const editorSections = document.querySelector("#editor-sections");
 const editorFeedback = document.querySelector("#editor-feedback");
 const appStatus = document.querySelector("#app-status");
 const exportGuidesButton = document.querySelector("#export-guides-button");
+const coverInput = document.querySelector("#guide-cover");
+const coverPreview = document.querySelector("#guide-cover-preview");
 let activeCategory = "all";
+let coverPreviewUrl = null;
 
 function renderGuides() {
   const allGuides = [...guides, ...drafts].filter((guide, index, list) =>
@@ -152,6 +155,14 @@ function renderGuides() {
     card.className = "guide-card";
     card.type = "button";
     card.setAttribute("aria-label", `Открыть гайд: ${guide.title}`);
+
+    if (guide.coverImage) {
+      const cover = document.createElement("img");
+      cover.className = "guide-card-image";
+      cover.src = guide.coverImage;
+      cover.alt = `Обложка: ${guide.title}`;
+      card.append(cover);
+    }
 
     const topLine = document.createElement("span");
     topLine.className = "card-topline";
@@ -185,7 +196,15 @@ function renderGuides() {
 function openGuide(guide) {
   dialogCategory.textContent = `ПОЛЕВОЙ ГАЙД · ${guide.category.toLocaleUpperCase("ru")}`;
   dialogTitle.textContent = guide.title;
-  dialogContent.replaceChildren(...guide.sections.flatMap((section) => {
+  const content = [];
+  if (guide.coverImage) {
+    const cover = document.createElement("img");
+    cover.className = "guide-dialog-cover";
+    cover.src = guide.coverImage;
+    cover.alt = `Иллюстрация к гайду «${guide.title}»`;
+    content.push(cover);
+  }
+  content.push(...guide.sections.flatMap((section) => {
     const heading = document.createElement("h3");
     heading.textContent = section.heading;
     const paragraphs = section.paragraphs.map((text) => {
@@ -195,6 +214,7 @@ function openGuide(guide) {
     });
     return [heading, ...paragraphs];
   }));
+  dialogContent.replaceChildren(...content);
   dialog.showModal();
 }
 
@@ -237,6 +257,9 @@ function isGuide(value) {
     && typeof value.id === "string"
     && typeof value.title === "string"
     && typeof value.summary === "string"
+    && (value.coverImage === undefined
+      || (typeof value.coverImage === "string"
+        && /^data:image\/(?:jpeg|png|webp);base64,[A-Za-z0-9+/]+={0,2}$/.test(value.coverImage)))
     && ["Старт", "Выживание", "Тактика", "Навигация"].includes(value.category)
     && Array.isArray(value.sections)
     && value.sections.length > 0
@@ -345,6 +368,79 @@ function updateEditorSectionLabels() {
   });
 }
 
+function clearCoverPreview() {
+  if (coverPreviewUrl) {
+    URL.revokeObjectURL(coverPreviewUrl);
+    coverPreviewUrl = null;
+  }
+  coverPreview.removeAttribute("src");
+  coverPreview.hidden = true;
+}
+
+coverInput.addEventListener("change", () => {
+  clearCoverPreview();
+  const file = coverInput.files[0];
+  if (!file) return;
+  coverPreviewUrl = URL.createObjectURL(file);
+  coverPreview.src = coverPreviewUrl;
+  coverPreview.hidden = false;
+});
+
+async function compressCoverImage(file) {
+  const supportedTypes = ["image/jpeg", "image/png", "image/webp"];
+  if (!supportedTypes.includes(file.type)) {
+    throw new Error("Выбери изображение JPG, PNG или WebP.");
+  }
+  if (file.size > 12 * 1024 * 1024) {
+    throw new Error("Исходное изображение больше 12 МБ.");
+  }
+
+  const sourceUrl = URL.createObjectURL(file);
+  try {
+    const image = await new Promise((resolve, reject) => {
+      const loadedImage = new Image();
+      loadedImage.onload = () => resolve(loadedImage);
+      loadedImage.onerror = () => reject(new Error("Не удалось открыть выбранное изображение."));
+      loadedImage.src = sourceUrl;
+    });
+    const canvas = document.createElement("canvas");
+    const context = canvas.getContext("2d");
+    if (!context) {
+      throw new Error("Браузер не смог подготовить изображение.");
+    }
+
+    for (let maxDimension = 1600; maxDimension >= 640; maxDimension = Math.floor(maxDimension * 0.8)) {
+      const scale = Math.min(1, maxDimension / image.naturalWidth, maxDimension / image.naturalHeight);
+      canvas.width = Math.round(image.naturalWidth * scale);
+      canvas.height = Math.round(image.naturalHeight * scale);
+      context.fillStyle = "#141411";
+      context.fillRect(0, 0, canvas.width, canvas.height);
+      context.drawImage(image, 0, 0, canvas.width, canvas.height);
+
+      const blob = await new Promise((resolve, reject) => {
+        canvas.toBlob((result) => {
+          if (result) resolve(result);
+          else reject(new Error("Не удалось сжать изображение."));
+        }, "image/jpeg", 0.78);
+      });
+      if (blob.size <= 750 * 1024) {
+        return await new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => {
+            if (typeof reader.result === "string") resolve(reader.result);
+            else reject(new Error("Не удалось преобразовать изображение в формат для сайта."));
+          };
+          reader.onerror = () => reject(new Error("Не удалось сохранить подготовленное изображение."));
+          reader.readAsDataURL(blob);
+        });
+      }
+    }
+  } finally {
+    URL.revokeObjectURL(sourceUrl);
+  }
+  throw new Error("Не удалось уменьшить изображение до 750 КБ. Выбери файл поменьше.");
+}
+
 function createGuideId() {
   return `community-${window.crypto?.randomUUID?.() || `${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`}`;
 }
@@ -354,7 +450,7 @@ document.querySelector("#add-guide-button").addEventListener("click", () => {
   editorDialog.showModal();
 });
 document.querySelector("#add-section-button").addEventListener("click", () => addEditorSection());
-editorForm.addEventListener("submit", (event) => {
+editorForm.addEventListener("submit", async (event) => {
   event.preventDefault();
   const formData = new FormData(editorForm);
   const sections = [...editorSections.querySelectorAll(".editor-section")].map((section) => ({
@@ -371,17 +467,27 @@ editorForm.addEventListener("submit", (event) => {
     summary: formData.get("summary").trim(),
     sections
   };
-  const updatedDrafts = [...drafts, newGuide];
+  const coverFile = coverInput.files[0];
+  const submitButton = editorForm.querySelector('[type="submit"]');
+  submitButton.disabled = true;
   try {
+    if (coverFile) {
+      editorFeedback.textContent = "Сжимаю изображение перед сохранением…";
+      newGuide.coverImage = await compressCoverImage(coverFile);
+    }
+    const updatedDrafts = [...drafts, newGuide];
     localStorage.setItem("dayz-guide-drafts", JSON.stringify(updatedDrafts));
     drafts = updatedDrafts;
     renderGuides();
-    editorFeedback.textContent = "Черновик сохранён в этом браузере. Скачай guides.json и добавь его в репозиторий GitHub для публикации.";
+    editorFeedback.textContent = "Черновик сохранён. Обложка включена в guides.json; скачай файл и добавь его в репозиторий GitHub для публикации.";
     editorForm.reset();
+    clearCoverPreview();
     editorSections.replaceChildren();
     addEditorSection();
   } catch (error) {
     editorFeedback.textContent = `Не удалось сохранить черновик: ${error.message}`;
+  } finally {
+    submitButton.disabled = false;
   }
 });
 
@@ -395,7 +501,7 @@ exportGuidesButton.addEventListener("click", () => {
   link.download = "guides.json";
   link.click();
   setTimeout(() => URL.revokeObjectURL(downloadUrl), 1000);
-  editorFeedback.textContent = "Файл скачан. Загрузи его в корень репозитория GitHub вместо старого guides.json и сохрани изменения.";
+  editorFeedback.textContent = "Файл скачан. Загрузи его в корень репозитория GitHub вместо старого guides.json и сохрани изменения. Обложки уже вложены в файл.";
 });
 
 readDrafts();

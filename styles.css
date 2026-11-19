@@ -93,7 +93,7 @@ textarea:focus-visible {
   display: inline-flex;
   align-items: center;
   gap: 12px;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 800;
   letter-spacing: 0.1em;
 }
@@ -117,7 +117,7 @@ textarea:focus-visible {
   margin-top: 4px;
   color: var(--muted);
   font-family: var(--mono);
-  font-size: 8px;
+  font-size: 11px;
   font-weight: 400;
   letter-spacing: 0.08em;
 }
@@ -126,7 +126,7 @@ textarea:focus-visible {
 .site-footer > a:last-child {
   color: var(--text);
   font-family: var(--mono);
-  font-size: 10px;
+  font-size: 12px;
   letter-spacing: 0.1em;
   transition: color 160ms ease;
 }
@@ -194,7 +194,7 @@ textarea:focus-visible {
   margin: 0;
   color: var(--accent);
   font-family: var(--mono);
-  font-size: 10px;
+  font-size: 12px;
   letter-spacing: 0.12em;
 }
 
@@ -228,7 +228,7 @@ h1 span {
   max-width: 440px;
   margin: 0;
   color: #d3ccba;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.75;
 }
 
@@ -241,7 +241,7 @@ h1 span {
   background: var(--accent);
   color: #171410;
   font-family: var(--mono);
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 800;
   letter-spacing: 0.06em;
   transition: background 160ms ease, transform 160ms ease;
@@ -277,7 +277,7 @@ h1 span {
   margin: 0;
   color: var(--accent);
   font-family: var(--mono);
-  font-size: 8px;
+  font-size: 11px;
   letter-spacing: 0.08em;
 }
 
@@ -342,7 +342,7 @@ h1 span {
   padding-bottom: 9px;
   border-bottom: 1px solid rgb(238 232 216 / 12%);
   font-family: var(--mono);
-  font-size: 8px;
+  font-size: 11px;
   letter-spacing: 0.08em;
 }
 
@@ -352,7 +352,7 @@ h1 span {
 
 .hero-stat-line strong {
   color: var(--text);
-  font-size: 9px;
+  font-size: 11px;
   font-weight: 500;
 }
 
@@ -366,7 +366,7 @@ h1 span {
   align-items: center;
   color: var(--olive);
   font-family: var(--mono);
-  font-size: 8px;
+  font-size: 11px;
   letter-spacing: 0.06em;
 }
 
@@ -376,7 +376,7 @@ h1 span {
   bottom: 20px;
   color: rgb(238 232 216 / 48%);
   font-family: var(--mono);
-  font-size: 9px;
+  font-size: 11px;
 }
 
 .guides-section {
@@ -425,7 +425,7 @@ h2 {
   outline: 0;
   background: transparent;
   color: var(--text);
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .search input::placeholder {
@@ -440,7 +440,7 @@ h2 {
   border: 1px solid var(--line);
   color: var(--muted);
   font-family: var(--mono);
-  font-size: 10px;
+  font-size: 12px;
 }
 
 .filters {
@@ -464,7 +464,7 @@ h2 {
 .app-status {
   margin: 0;
   color: #e5b480;
-  font-size: 11px;
+  font-size: 13px;
   line-height: 1.6;
 }
 
@@ -477,7 +477,7 @@ h2 {
   background: var(--accent);
   color: #171410;
   cursor: pointer;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.06em;
   transition: background 160ms ease, border-color 160ms ease;
@@ -519,7 +519,7 @@ h2 {
   background: transparent;
   color: var(--muted);
   cursor: pointer;
-  font-size: 10px;
+  font-size: 12px;
   letter-spacing: 0.04em;
   transition: color 160ms ease, border-color 160ms ease, background 160ms ease;
 }
@@ -539,7 +539,7 @@ h2 {
 .filter-button span {
   color: var(--accent);
   font-family: var(--mono);
-  font-size: 9px;
+  font-size: 11px;
 }
 
 .guide-grid {
@@ -562,6 +562,15 @@ h2 {
   text-align: left;
   cursor: pointer;
   transition: border-color 180ms ease, transform 180ms ease, background 180ms ease;
+}
+
+.guide-card-image {
+  width: calc(100% + 44px);
+  height: 150px;
+  margin: -22px -22px 18px;
+  border-bottom: 1px solid var(--line);
+  object-fit: cover;
+  filter: saturate(0.78) contrast(1.05);
 }
 
 .guide-card::before {
@@ -592,7 +601,7 @@ h2 {
   background: var(--accent-dim);
   color: var(--accent);
   font-family: var(--mono);
-  font-size: 8px;
+  font-size: 11px;
   letter-spacing: 0.06em;
 }
 
@@ -600,7 +609,7 @@ h2 {
 .card-arrow {
   color: #8e8878;
   font-family: var(--mono);
-  font-size: 10px;
+  font-size: 12px;
 }
 
 .guide-card-title {
@@ -618,7 +627,7 @@ h2 {
   display: block;
   margin: 0;
   color: var(--muted);
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.75;
 }
 
@@ -633,7 +642,7 @@ h2 {
 .empty-state {
   margin: 32px 0;
   color: var(--muted);
-  font-size: 13px;
+  font-size: 14px;
   text-align: center;
 }
 
@@ -664,7 +673,7 @@ h2 {
 .field-note p {
   margin: 0;
   color: #c9c1af;
-  font-size: 11px;
+  font-size: 14px;
   line-height: 1.7;
 }
 
@@ -676,7 +685,7 @@ h2 {
   margin-left: auto;
   color: #928a77;
   font-family: var(--mono);
-  font-size: 8px;
+  font-size: 11px;
   white-space: nowrap;
 }
 
@@ -687,7 +696,7 @@ h2 {
 }
 
 .footer-brand {
-  font-size: 9px;
+  font-size: 11px;
 }
 
 .footer-brand .brand-mark {
@@ -698,7 +707,7 @@ h2 {
 
 .site-footer > p {
   color: #8e8878;
-  font-size: 9px;
+  font-size: 12px;
 }
 
 .guide-dialog {
@@ -735,6 +744,15 @@ h2 {
   font-size: clamp(23px, 5vw, 31px);
 }
 
+.guide-dialog-cover {
+  display: block;
+  width: 100%;
+  max-height: 340px;
+  margin: 0 0 22px;
+  border: 1px solid var(--line);
+  object-fit: cover;
+}
+
 .editor-dialog {
   width: min(620px, calc(100% - 32px));
 }
@@ -746,7 +764,7 @@ h2 {
 .editor-help {
   margin: 0 0 22px;
   color: var(--muted);
-  font-size: 11px;
+  font-size: 13px;
   line-height: 1.7;
 }
 
@@ -760,7 +778,7 @@ h2 {
   gap: 7px;
   margin: 15px 0;
   color: #d5ddd3;
-  font-size: 11px;
+  font-size: 14px;
 }
 
 .editor-field input,
@@ -773,7 +791,44 @@ h2 {
   border-radius: 0;
   background: #141411;
   color: var(--text);
+  font-size: 15px;
+}
+
+.editor-field input[type="file"] {
+  min-height: 48px;
+  padding: 7px;
   font-size: 13px;
+}
+
+.editor-field input[type="file"]::file-selector-button {
+  min-height: 32px;
+  margin-right: 10px;
+  padding: 6px 10px;
+  border: 1px solid var(--line);
+  background: var(--surface-raised);
+  color: var(--text);
+  font: inherit;
+  cursor: pointer;
+}
+
+.editor-hint {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.cover-preview {
+  display: block;
+  width: 100%;
+  max-height: 300px;
+  margin: -4px 0 18px;
+  border: 1px solid var(--line);
+  object-fit: contain;
+  background: #10100e;
+}
+
+.cover-preview[hidden] {
+  display: none;
 }
 
 .editor-field textarea {
@@ -793,14 +848,14 @@ h2 {
 .editor-section-heading {
   margin: 25px 0 10px;
   color: var(--accent);
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 700;
 }
 
 .editor-section-heading .secondary-button {
   min-height: 36px;
   padding: 7px 10px;
-  font-size: 10px;
+  font-size: 12px;
 }
 
 .editor-section {
@@ -814,13 +869,13 @@ h2 {
   padding: 0 6px;
   color: var(--muted);
   font-family: var(--mono);
-  font-size: 10px;
+  font-size: 12px;
 }
 
 .remove-section-button {
   min-height: 34px;
   padding: 7px 10px;
-  font-size: 10px;
+  font-size: 12px;
 }
 
 .editor-actions {
@@ -833,20 +888,20 @@ h2 {
   min-height: 1.5em;
   margin: 15px 0 0;
   color: var(--accent);
-  font-size: 11px;
+  font-size: 13px;
   line-height: 1.6;
 }
 
 .dialog-content h3 {
   margin: 22px 0 7px;
   color: var(--accent);
-  font-size: 13px;
+  font-size: 16px;
 }
 
 .dialog-content p,
 .dialog-content li {
   color: #bbc5ba;
-  font-size: 12px;
+  font-size: 15px;
   line-height: 1.8;
 }
 
@@ -861,7 +916,7 @@ h2 {
   border-top: 1px solid var(--line);
   color: var(--accent);
   font-family: var(--mono);
-  font-size: 9px;
+  font-size: 12px;
   letter-spacing: 0.05em;
 }
 
@@ -924,7 +979,7 @@ h2 {
   }
 
   .brand {
-    font-size: 9px;
+    font-size: 11px;
   }
 
   .brand-mark {
@@ -933,7 +988,7 @@ h2 {
   }
 
   .header-link {
-    font-size: 10px;
+    font-size: 12px;
   }
 
   .hero {
@@ -947,7 +1002,7 @@ h2 {
 
   .hero-description {
     max-width: 340px;
-    font-size: 13px;
+    font-size: 15px;
   }
 
   .hero-stats {
@@ -958,7 +1013,7 @@ h2 {
 
   .hero-coordinate {
     margin-top: -17px;
-    font-size: 7px;
+    font-size: 10px;
   }
 
   .guides-section {

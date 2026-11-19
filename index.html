@@ -114,6 +114,12 @@
           <span>Короткое описание</span>
           <textarea name="summary" rows="3" maxlength="220" required></textarea>
         </label>
+        <label class="editor-field">
+          <span>Обложка гайда (необязательно)</span>
+          <input id="guide-cover" name="cover-image" type="file" accept="image/jpeg,image/png,image/webp">
+          <span class="editor-hint">JPG, PNG или WebP до 12 МБ. Обложка сожмётся до 750 КБ.</span>
+        </label>
+        <img class="cover-preview" id="guide-cover-preview" alt="Предпросмотр обложки" hidden>
         <div class="editor-section-heading">
           <span>Разделы гайда</span>
           <button class="secondary-button" id="add-section-button" type="button">＋ Раздел</button>
