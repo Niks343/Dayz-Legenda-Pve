@@ -2,6 +2,11 @@
 
 Небольшой русскоязычный сайт с практическими гайдами по выживанию в DayZ. Это статический сайт: HTML, CSS и JavaScript, без сборки и внешних зависимостей. Поиск, фильтры, просмотр и редактор гайдов работают в браузере.
 
+## Онлайн-версия
+
+Сайт: https://niks343.github.io/Dayz-Legenda-Pve/  
+Репозиторий: https://github.com/Niks343/Dayz-Legenda-Pve
+
 ## Запуск локально
 
 Запусти локальный статический сервер из этой папки:
@@ -25,20 +30,7 @@ python -m http.server 8000
 
 В репозитории уже есть workflow `.github/workflows/pages.yml`: после публикации в ветку `main` он автоматически выкладывает сайт в GitHub Pages.
 
-1. Создай пустой репозиторий на GitHub.
-2. В этой папке открой PowerShell и выполни команды, подставив адрес своего репозитория:
-
-   ```powershell
-   git init
-   git add .
-   git commit -m "Create DayZ field guide"
-   git branch -M main
-   git remote add origin https://github.com/USERNAME/REPOSITORY.git
-   git push -u origin main
-   ```
-
-3. В настройках репозитория открой **Settings → Pages** и выбери источник публикации **GitHub Actions**, если GitHub не включил его автоматически.
-4. Дождись завершения workflow **Deploy to GitHub Pages**. Ссылка на опубликованный сайт появится в настройках Pages и в окружении `github-pages` на вкладке **Actions**.
+В [репозитории проекта](https://github.com/Niks343/Dayz-Legenda-Pve) открой **Settings → Pages** и установи **Build and deployment → Source: GitHub Actions**. После каждого push в ветку `main` workflow **Deploy to GitHub Pages** публикует обновлённый сайт.
 
 Все исходные файлы сайта хранятся в репозитории; GitHub Pages публикует их автоматически при каждом обновлении ветки `main`.
 
