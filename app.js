@@ -5,6 +5,7 @@ let hasCatalogDraft = false;
 let savedCatalogDraft = null;
 let publishedCatalogLoaded = false;
 const catalogStorageKey = "dayz-guide-catalog-draft";
+const editPassword = "1290";
 const grid = document.querySelector("#guide-grid");
 const searchInput = document.querySelector("#guide-search");
 const emptyState = document.querySelector("#empty-state");
@@ -13,6 +14,9 @@ const dialog = document.querySelector("#guide-dialog");
 const dialogCategory = document.querySelector("#dialog-category");
 const dialogTitle = document.querySelector("#dialog-title");
 const dialogContent = document.querySelector("#dialog-content");
+const passwordDialog = document.querySelector("#password-dialog");
+const passwordForm = document.querySelector("#password-form");
+const passwordInput = document.querySelector("#edit-password");
 const editorDialog = document.querySelector("#editor-dialog");
 const editorForm = document.querySelector("#guide-form");
 const editorSections = document.querySelector("#editor-sections");
@@ -28,6 +32,7 @@ const addGuideButton = document.querySelector("#add-guide-button");
 let activeCategory = "all";
 let editingGuideId = null;
 let coverPreviewUrl = null;
+let resolvePasswordAttempt = null;
 
 function catalogsMatch(left, right) {
   return JSON.stringify(left) === JSON.stringify(right);
@@ -157,13 +162,21 @@ filterButtons.forEach((button) => {
 document.querySelectorAll(".dialog-close").forEach((button) => {
   button.addEventListener("click", () => button.closest("dialog").close());
 });
-[dialog, editorDialog].forEach((currentDialog) => {
+[dialog, passwordDialog, editorDialog].forEach((currentDialog) => {
   currentDialog.addEventListener("click", (event) => {
     if (event.target === currentDialog) currentDialog.close();
   });
 });
+passwordDialog.addEventListener("close", () => {
+  if (resolvePasswordAttempt) {
+    const resolve = resolvePasswordAttempt;
+    resolvePasswordAttempt = null;
+    resolve(false);
+  }
+});
+document.querySelector("#cancel-password-button").addEventListener("click", () => passwordDialog.close());
 document.addEventListener("keydown", (event) => {
-  if (event.key === "/" && !dialog.open && !editorDialog.open && document.activeElement !== searchInput) {
+  if (event.key === "/" && !dialog.open && !passwordDialog.open && !editorDialog.open && document.activeElement !== searchInput) {
     event.preventDefault();
     searchInput.focus();
   }
@@ -173,6 +186,30 @@ function showAppStatus(message) {
   appStatus.textContent = message;
   appStatus.hidden = false;
 }
+
+function requestEditAccess() {
+  passwordInput.value = "";
+  return new Promise((resolve) => {
+    resolvePasswordAttempt = resolve;
+    passwordDialog.showModal();
+    passwordInput.focus();
+  });
+}
+
+function finishPasswordAttempt(isCorrect) {
+  const resolve = resolvePasswordAttempt;
+  resolvePasswordAttempt = null;
+  passwordDialog.close();
+  if (!isCorrect) {
+    showAppStatus("Неверный пароль. Изменения не внесены.");
+  }
+  resolve?.(isCorrect);
+}
+
+passwordForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  finishPasswordAttempt(passwordInput.value === editPassword);
+});
 
 function isGuide(value) {
   return value
@@ -432,12 +469,13 @@ function openNewGuideEditor() {
   editorDialog.showModal();
 }
 
-function editGuide(guideId) {
+async function editGuide(guideId) {
   const guide = guides.find((item) => item.id === guideId);
   if (!guide) {
     showAppStatus("Не удалось найти гайд для редактирования.");
     return;
   }
+  if (!await requestEditAccess()) return;
   editingGuideId = guideId;
   editorTitle.textContent = "Редактировать гайд";
   saveGuideButton.textContent = "Сохранить изменения";
@@ -456,9 +494,12 @@ function editGuide(guideId) {
   editorDialog.showModal();
 }
 
-function deleteGuide(guideId) {
+async function deleteGuide(guideId) {
   const guide = guides.find((item) => item.id === guideId);
-  if (!guide || !window.confirm(`Удалить гайд «${guide.title}»? Изменение пока сохранится только в этом браузере.`)) {
+  if (!guide || !await requestEditAccess()) {
+    return;
+  }
+  if (!window.confirm(`Удалить гайд «${guide.title}»? Изменение пока сохранится только в этом браузере.`)) {
     return;
   }
   if (saveGuideCatalog(guides.filter((item) => item.id !== guideId))) {
@@ -466,8 +507,11 @@ function deleteGuide(guideId) {
   }
 }
 
-function deleteAllGuides() {
-  if (!guides.length || !window.confirm(`Удалить все ${guides.length} гайдов? Это изменит только локальный каталог до публикации guides.json.`)) {
+async function deleteAllGuides() {
+  if (!guides.length || !await requestEditAccess()) {
+    return;
+  }
+  if (!window.confirm(`Удалить все ${guides.length} гайдов? Это изменит только локальный каталог до публикации guides.json.`)) {
     return;
   }
   if (saveGuideCatalog([])) {

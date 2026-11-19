@@ -95,6 +95,22 @@
       <p class="dialog-reminder">Удачи в пути. Следи за спиной.</p>
     </dialog>
 
+    <dialog class="guide-dialog password-dialog" id="password-dialog" aria-labelledby="password-title">
+      <button class="dialog-close" type="button" aria-label="Закрыть окно пароля">×</button>
+      <p class="eyebrow">ДОСТУП К УПРАВЛЕНИЮ</p>
+      <h2 id="password-title">Введите пароль</h2>
+      <form id="password-form">
+        <label class="editor-field">
+          <span>Пароль для редактирования и удаления</span>
+          <input id="edit-password" name="password" type="password" inputmode="numeric" pattern="[0-9]{4}" minlength="4" maxlength="4" autocomplete="off" required>
+        </label>
+        <div class="editor-actions">
+          <button class="add-guide-button" type="submit">Продолжить</button>
+          <button class="secondary-button" id="cancel-password-button" type="button">Отмена</button>
+        </div>
+      </form>
+    </dialog>
+
     <dialog class="guide-dialog editor-dialog" id="editor-dialog" aria-labelledby="editor-title">
       <button class="dialog-close" type="button" aria-label="Закрыть редактор">×</button>
       <p class="eyebrow">ПОЛЕВОЙ РЕДАКТОР</p>
