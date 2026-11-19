@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#111713">
+    <meta name="description" content="Короткие практические гайды по выживанию в DayZ: первые шаги, еда, здоровье, бой и навигация.">
+    <title>Полевой справочник — DayZ</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="#" aria-label="Полевой справочник DayZ — на главную">
+        <span class="brand-mark" aria-hidden="true">DZ</span>
+        <span>ПОЛЕВОЙ СПРАВОЧНИК<span class="brand-subtitle">НЕ ОФИЦИАЛЬНЫЙ ГАЙД ПО DAYZ</span></span>
+      </a>
+      <a class="header-link" href="#guides">К гайдам <span aria-hidden="true">↓</span></a>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow"><span class="status-dot"></span> ЗАМЕТКИ ВЫЖИВШЕГО</p>
+          <h1>Дольше живи.<br><span>Меньше шуми.</span></h1>
+          <p class="hero-description">Короткие и полезные советы для тех, кто только появился на побережье — и тех, кто хочет вернуться домой.</p>
+          <a class="primary-link" href="#guides">Найти нужный совет <span aria-hidden="true">↘</span></a>
+        </div>
+        <div class="hero-stats" aria-label="О справочнике">
+          <div><strong id="guide-total">06</strong><span>полевых<br>гайдов</span></div>
+          <div><strong>∞</strong><span>шансов начать<br>сначала</span></div>
+          <p>ОСТАВАЙСЯ<br>НА СВЯЗИ.</p>
+        </div>
+        <span class="hero-coordinate" aria-hidden="true">Chernarus · 04:17 AM</span>
+      </section>
+
+      <section class="guides-section" id="guides">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">ПАМЯТКИ ДЛЯ ДОРОГИ</p>
+            <h2>Выбери тему</h2>
+          </div>
+          <label class="search">
+            <span class="visually-hidden">Поиск по гайдам</span>
+            <span class="search-icon" aria-hidden="true">⌕</span>
+            <input id="guide-search" type="search" placeholder="Например, вода..." autocomplete="off">
+            <kbd>/</kbd>
+          </label>
+        </div>
+
+        <div class="filters" role="group" aria-label="Фильтр гайдов">
+          <button class="filter-button is-active" type="button" data-category="all" aria-pressed="true">Все <span>06</span></button>
+          <button class="filter-button" type="button" data-category="Старт" aria-pressed="false">Первые шаги</button>
+          <button class="filter-button" type="button" data-category="Выживание" aria-pressed="false">Выживание</button>
+          <button class="filter-button" type="button" data-category="Тактика" aria-pressed="false">Тактика</button>
+          <button class="filter-button" type="button" data-category="Навигация" aria-pressed="false">Навигация</button>
+        </div>
+
+        <div class="guide-actions">
+          <p id="app-status" class="app-status" role="status" hidden></p>
+          <button class="add-guide-button" id="add-guide-button" type="button">＋ Добавить гайд</button>
+        </div>
+        <div class="guide-grid" id="guide-grid" aria-live="polite"></div>
+        <p class="empty-state" id="empty-state" hidden>По этому запросу ничего не нашлось. Попробуй другое слово.</p>
+      </section>
+
+      <aside class="field-note">
+        <span class="note-icon" aria-hidden="true">!</span>
+        <p><strong>Помни:</strong> механики могут отличаться в зависимости от версии игры и настроек сервера. Проверяй важные вещи в игре.</p>
+        <span class="note-stamp">ПОЛЕВАЯ ЗАМЕТКА №01</span>
+      </aside>
+    </main>
+
+    <footer class="site-footer">
+      <a class="brand footer-brand" href="#">
+        <span class="brand-mark" aria-hidden="true">DZ</span>
+        <span>ПОЛЕВОЙ СПРАВОЧНИК<span class="brand-subtitle">СДЕЛАНО ДЛЯ ВЫЖИВШИХ</span></span>
+      </a>
+      <p>Фанатский справочник. Не связан с Bohemia Interactive.</p>
+      <a href="README.md">Опубликовать на GitHub <span aria-hidden="true">↗</span></a>
+    </footer>
+
+    <dialog class="guide-dialog" id="guide-dialog" aria-labelledby="dialog-title">
+      <button class="dialog-close" type="button" aria-label="Закрыть гайд">×</button>
+      <p class="eyebrow" id="dialog-category"></p>
+      <h2 id="dialog-title"></h2>
+      <div class="dialog-content" id="dialog-content"></div>
+      <p class="dialog-reminder">Удачи в пути. Следи за спиной.</p>
+    </dialog>
+
+    <dialog class="guide-dialog editor-dialog" id="editor-dialog" aria-labelledby="editor-title">
+      <button class="dialog-close" type="button" aria-label="Закрыть редактор">×</button>
+      <p class="eyebrow">ПОЛЕВОЙ РЕДАКТОР</p>
+      <h2 id="editor-title">Новый гайд</h2>
+      <p class="editor-help">Черновик сохранится только в этом браузере. Чтобы опубликовать его для всех, скачай JSON и добавь файл <code>guides.json</code> в репозиторий GitHub.</p>
+      <form id="guide-form">
+        <label class="editor-field">
+          <span>Название</span>
+          <input name="title" type="text" maxlength="80" required>
+        </label>
+        <label class="editor-field">
+          <span>Тема</span>
+          <select name="category" required>
+            <option value="Старт">Первые шаги</option>
+            <option value="Выживание">Выживание</option>
+            <option value="Тактика">Тактика</option>
+            <option value="Навигация">Навигация</option>
+          </select>
+        </label>
+        <label class="editor-field">
+          <span>Короткое описание</span>
+          <textarea name="summary" rows="3" maxlength="220" required></textarea>
+        </label>
+        <div class="editor-section-heading">
+          <span>Разделы гайда</span>
+          <button class="secondary-button" id="add-section-button" type="button">＋ Раздел</button>
+        </div>
+        <div id="editor-sections"></div>
+        <div class="editor-actions">
+          <button class="add-guide-button" type="submit">Сохранить черновик</button>
+          <button class="secondary-button" id="export-guides-button" type="button" disabled>Скачать guides.json</button>
+        </div>
+        <p class="editor-feedback" id="editor-feedback" role="status" aria-live="polite"></p>
+      </form>
+    </dialog>
+  </body>
+</html>
