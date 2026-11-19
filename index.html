@@ -61,7 +61,11 @@
 
         <div class="guide-actions">
           <p id="app-status" class="app-status" role="status" hidden></p>
-          <button class="add-guide-button" id="add-guide-button" type="button">＋ Добавить гайд</button>
+          <div class="guide-action-buttons">
+            <button class="danger-button" id="delete-all-guides-button" type="button" hidden>Удалить все гайды</button>
+            <button class="secondary-button" id="export-guides-button" type="button" disabled>Скачать guides.json</button>
+            <button class="add-guide-button" id="add-guide-button" type="button">＋ Добавить гайд</button>
+          </div>
         </div>
         <div class="guide-grid" id="guide-grid" aria-live="polite"></div>
         <p class="empty-state" id="empty-state" hidden>По этому запросу ничего не нашлось. Попробуй другое слово.</p>
@@ -126,8 +130,7 @@
         </div>
         <div id="editor-sections"></div>
         <div class="editor-actions">
-          <button class="add-guide-button" type="submit">Сохранить черновик</button>
-          <button class="secondary-button" id="export-guides-button" type="button" disabled>Скачать guides.json</button>
+          <button class="add-guide-button" id="save-guide-button" type="submit">Сохранить гайд</button>
         </div>
         <p class="editor-feedback" id="editor-feedback" role="status" aria-live="polite"></p>
       </form>

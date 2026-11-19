@@ -461,6 +461,17 @@ h2 {
   margin: 0 0 14px;
 }
 
+.guide-action-buttons {
+  display: flex;
+  flex: 0 0 auto;
+  gap: 9px;
+  margin-left: auto;
+}
+
+.guide-action-buttons [hidden] {
+  display: none;
+}
+
 .app-status {
   margin: 0;
   color: #e5b480;
@@ -470,7 +481,8 @@ h2 {
 
 .add-guide-button,
 .secondary-button,
-.remove-section-button {
+.remove-section-button,
+.danger-button {
   min-height: 42px;
   padding: 11px 16px;
   border: 1px solid #a34f31;
@@ -494,6 +506,17 @@ h2 {
   color: var(--text);
 }
 
+.danger-button {
+  border-color: #70452f;
+  background: #261b16;
+  color: #e3a17d;
+}
+
+.danger-button:hover {
+  border-color: var(--accent);
+  background: #38241b;
+}
+
 .secondary-button:hover,
 .remove-section-button:hover:not(:disabled) {
   border-color: #647d4d;
@@ -505,6 +528,12 @@ h2 {
 }
 
 .secondary-button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.add-guide-button:disabled,
+.danger-button:disabled {
   opacity: 0.45;
   cursor: not-allowed;
 }
@@ -554,14 +583,30 @@ h2 {
   min-height: 230px;
   flex-direction: column;
   align-items: flex-start;
-  padding: 22px;
   border: 1px solid var(--line);
   background:
     linear-gradient(145deg, rgb(34 33 27 / 94%), rgb(24 24 20 / 98%)),
     repeating-linear-gradient(0deg, transparent 0 4px, rgb(255 255 255 / 5%) 5px);
+  transition: border-color 180ms ease, transform 180ms ease, background 180ms ease;
+}
+
+.guide-card-open {
+  display: flex;
+  width: 100%;
+  min-height: 185px;
+  flex: 1;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 22px;
+  border: 0;
+  background: transparent;
+  color: var(--text);
   text-align: left;
   cursor: pointer;
-  transition: border-color 180ms ease, transform 180ms ease, background 180ms ease;
+}
+
+.guide-card-open:focus-visible {
+  outline-offset: -4px;
 }
 
 .guide-card-image {
@@ -587,6 +632,45 @@ h2 {
   transform: translateY(-4px);
   border-color: #8a593e;
   background: var(--surface-raised);
+}
+
+.guide-card-actions {
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 0 14px 12px;
+}
+
+.guide-edit-button,
+.guide-delete-button {
+  min-height: 36px;
+  padding: 7px 10px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.guide-edit-button:hover {
+  border-color: var(--olive);
+  color: var(--olive);
+}
+
+.guide-delete-button {
+  color: #e3a17d;
+}
+
+.guide-delete-button:hover {
+  border-color: var(--accent);
+  background: #38241b;
+}
+
+.guide-edit-button:disabled,
+.guide-delete-button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
 }
 
 .card-topline {
@@ -1037,10 +1121,18 @@ h2 {
 
   .guide-actions {
     align-items: flex-start;
-    flex-direction: column-reverse;
+    flex-direction: column;
   }
 
-  .add-guide-button {
+  .guide-action-buttons {
+    width: 100%;
+    flex-direction: column;
+    margin-left: 0;
+  }
+
+  .guide-action-buttons .add-guide-button,
+  .guide-action-buttons .danger-button,
+  .guide-action-buttons .secondary-button {
     width: 100%;
   }
 
@@ -1050,7 +1142,16 @@ h2 {
 
   .guide-card {
     min-height: 175px;
+  }
+
+  .guide-card-open {
+    min-height: 155px;
     padding: 20px;
+  }
+
+  .guide-card-image {
+    width: calc(100% + 40px);
+    margin: -20px -20px 16px;
   }
 
   .field-note {

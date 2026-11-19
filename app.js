@@ -1,122 +1,10 @@
-const builtInGuides = [
-  {
-    category: "Старт",
-    title: "Первые 10 минут",
-    summary: "Что делать сразу после появления на берегу, чтобы не остаться без сил и снаряжения.",
-    sections: [
-      {
-        heading: "Осмотрись и проверь состояние",
-        paragraphs: ["Не беги сразу вглубь карты. Проверь индикаторы здоровья, крови, температуры и воды, а затем осмотрись вокруг. В первые минуты важнее понять, где ты и что у тебя уже есть."]
-      },
-      {
-        heading: "Собери базовый набор",
-        paragraphs: ["Ищи одежду с хорошей вместимостью, нож или другой инструмент, ёмкость для воды и простую еду. Осматривай дома по пути, но не задерживайся надолго в открытом месте."]
-      },
-      {
-        heading: "Уходи от побережья с планом",
-        paragraphs: ["Выбери ориентир и двигайся от поселения к поселению. Не набивай рюкзак всем подряд: свободные руки, вода и запас здоровья полезнее случайного хлама."]
-      }
-    ]
-  },
-  {
-    category: "Выживание",
-    title: "Вода и еда",
-    summary: "Как искать припасы, пить безопаснее и не тратить силы на лишние перебежки.",
-    sections: [
-      {
-        heading: "Сначала найди источник",
-        paragraphs: ["Проверяй дома, теплицы и другие места с припасами. У колодца можно пополнить запас воды, но не пей из сомнительной ёмкости, если не уверен в её содержимом."]
-      },
-      {
-        heading: "Пей небольшими порциями",
-        paragraphs: ["Не жди, пока индикатор опустеет. Делай короткие остановки и следи за состоянием персонажа. Если используешь найденную тару, проверь, чистая ли в ней вода; при сомнениях найди надёжный источник или обработай её подходящим способом."]
-      },
-      {
-        heading: "Еда — это не только консервы",
-        paragraphs: ["Ищи продукты в зданиях и используй доступные источники еды по ситуации. Не переедай за один раз, проверяй состояние продуктов и мой руки после разделки сырого мяса, прежде чем есть."]
-      }
-    ]
-  },
-  {
-    category: "Выживание",
-    title: "Тепло и здоровье",
-    summary: "Сухая одежда, осторожность с ранами и простые привычки, которые берегут жизнь.",
-    sections: [
-      {
-        heading: "Не игнорируй холод",
-        paragraphs: ["Мокрая одежда и долгое пребывание под дождём ускоряют потерю тепла. Найди укрытие, высуши вещи у безопасного источника тепла и старайся носить подходящую одежду."]
-      },
-      {
-        heading: "Обрабатывай раны чистыми средствами",
-        paragraphs: ["Для перевязки используй чистую повязку или подходящий медицинский предмет. Не забывай дезинфицировать грязную ткань, если такая возможность есть. После укуса или травмы оцени ситуацию и используй подходящие предметы из инвентаря."]
-      },
-      {
-        heading: "Следи за признаками болезни",
-        paragraphs: ["Кашель, чихание и ухудшение состояния — повод остановиться, согреться и проверить, что ты ел и пил. Лекарства помогают только при правильном применении: прочитай описание предмета и не принимай всё подряд."]
-      }
-    ]
-  },
-  {
-    category: "Тактика",
-    title: "Заражённые и шум",
-    summary: "Как не собрать за собой полгорода и выбраться, если драка уже началась.",
-    sections: [
-      {
-        heading: "Сначала избегай столкновения",
-        paragraphs: ["Заражённые реагируют на шум и движение. Обходи группы, используй укрытия и не бегай рядом с ними без необходимости. Выстрел может привлечь ещё больше внимания."]
-      },
-      {
-        heading: "Если заметили",
-        paragraphs: ["Отходи к безопасному укрытию и не загоняй себя в тупик. Не провоцируй группу, если рядом могут быть другие игроки. В ближнем бою держи дистанцию и следи за выносливостью."]
-      },
-      {
-        heading: "Планируй выход",
-        paragraphs: ["Перед входом в здание отметь второй путь наружу. После контакта проверь здоровье, одежду и запас сил, а затем смени позицию — задерживаться на шумном месте опасно."]
-      }
-    ]
-  },
-  {
-    category: "Тактика",
-    title: "Перестрелка: выживи и отступи",
-    summary: "Что делать при встрече с другим игроком, когда победа не важнее жизни.",
-    sections: [
-      {
-        heading: "Не стой на линии огня",
-        paragraphs: ["При звуке выстрела найди укрытие и оцени направление угрозы. Не выглядывай многократно из одной точки. Если противник тебя не видит, уход может быть безопаснее ответного огня."]
-      },
-      {
-        heading: "Проверь снаряжение заранее",
-        paragraphs: ["До опасной зоны убедись, что оружие заряжено, боеприпасы подходят, а медицинские предметы доступны. В инвентаре не должно быть лишнего, что мешает быстро двигаться."]
-      },
-      {
-        heading: "После контакта смени позицию",
-        paragraphs: ["Не беги сразу к месту, откуда стреляли: там могут ждать. Перевяжись только в укрытии, оцени состояние и отступи другим маршрутом."]
-      }
-    ]
-  },
-  {
-    category: "Навигация",
-    title: "Не теряйся на карте",
-    summary: "Ориентиры, дороги и спокойный маршрут вместо бесцельного бега.",
-    sections: [
-      {
-        heading: "Сверяйся с ориентирами",
-        paragraphs: ["Используй карту, если она у тебя есть, и сверяй её с табличками, железной дорогой, береговой линией и заметными зданиями. На разных серверах могут быть свои особенности."]
-      },
-      {
-        heading: "Двигайся короткими отрезками",
-        paragraphs: ["Выбери следующий понятный ориентир, дойди до него и только потом планируй продолжение. Так проще заметить угрозу и не уйти слишком далеко от воды или укрытия."]
-      },
-      {
-        heading: "Планируй маршрут по риску",
-        paragraphs: ["Главные дороги быстрее, но заметнее. Лес и второстепенные тропы дают укрытие, однако в них легче потерять направление. Держи в голове запасной путь и место, где можно переждать."]
-      }
-    ]
-  }
-];
-
-let guides = [...builtInGuides];
-let drafts = [];
+let guides = [];
+let publishedGuides = [];
+let legacyDrafts = [];
+let hasCatalogDraft = false;
+let savedCatalogDraft = null;
+let publishedCatalogLoaded = false;
+const catalogStorageKey = "dayz-guide-catalog-draft";
 const grid = document.querySelector("#guide-grid");
 const searchInput = document.querySelector("#guide-search");
 const emptyState = document.querySelector("#empty-state");
@@ -133,15 +21,21 @@ const appStatus = document.querySelector("#app-status");
 const exportGuidesButton = document.querySelector("#export-guides-button");
 const coverInput = document.querySelector("#guide-cover");
 const coverPreview = document.querySelector("#guide-cover-preview");
+const editorTitle = document.querySelector("#editor-title");
+const saveGuideButton = document.querySelector("#save-guide-button");
+const deleteAllGuidesButton = document.querySelector("#delete-all-guides-button");
+const addGuideButton = document.querySelector("#add-guide-button");
 let activeCategory = "all";
+let editingGuideId = null;
 let coverPreviewUrl = null;
 
+function catalogsMatch(left, right) {
+  return JSON.stringify(left) === JSON.stringify(right);
+}
+
 function renderGuides() {
-  const allGuides = [...guides, ...drafts].filter((guide, index, list) =>
-    !guide.id || list.findIndex((item) => item.id === guide.id) === index
-  );
   const query = searchInput.value.trim().toLocaleLowerCase("ru");
-  const visibleGuides = allGuides
+  const visibleGuides = guides
     .map((guide, index) => ({ guide, index }))
     .filter(({ guide }) => {
       const matchesCategory = activeCategory === "all" || guide.category === activeCategory;
@@ -151,17 +45,19 @@ function renderGuides() {
     });
 
   grid.replaceChildren(...visibleGuides.map(({ guide, index }) => {
-    const card = document.createElement("button");
+    const card = document.createElement("article");
     card.className = "guide-card";
-    card.type = "button";
-    card.setAttribute("aria-label", `Открыть гайд: ${guide.title}`);
+    const openButton = document.createElement("button");
+    openButton.className = "guide-card-open";
+    openButton.type = "button";
+    openButton.setAttribute("aria-label", `Открыть гайд: ${guide.title}`);
 
     if (guide.coverImage) {
       const cover = document.createElement("img");
       cover.className = "guide-card-image";
       cover.src = guide.coverImage;
       cover.alt = `Обложка: ${guide.title}`;
-      card.append(cover);
+      openButton.append(cover);
     }
 
     const topLine = document.createElement("span");
@@ -184,13 +80,39 @@ function renderGuides() {
     arrow.className = "card-arrow";
     arrow.setAttribute("aria-hidden", "true");
     arrow.textContent = "↗";
-    card.append(topLine, title, summary, arrow);
-    card.addEventListener("click", () => openGuide(guide));
+    openButton.append(topLine, title, summary, arrow);
+    openButton.addEventListener("click", () => openGuide(guide));
+
+    const actions = document.createElement("div");
+    actions.className = "guide-card-actions";
+    const editButton = document.createElement("button");
+    editButton.className = "guide-edit-button";
+    editButton.type = "button";
+    editButton.textContent = "Редактировать";
+    editButton.setAttribute("aria-label", `Редактировать гайд: ${guide.title}`);
+    editButton.disabled = !publishedCatalogLoaded;
+    editButton.addEventListener("click", () => editGuide(guide.id));
+    const deleteButton = document.createElement("button");
+    deleteButton.className = "guide-delete-button";
+    deleteButton.type = "button";
+    deleteButton.textContent = "Удалить";
+    deleteButton.setAttribute("aria-label", `Удалить гайд: ${guide.title}`);
+    deleteButton.disabled = !publishedCatalogLoaded;
+    deleteButton.addEventListener("click", () => deleteGuide(guide.id));
+    actions.append(editButton, deleteButton);
+    card.append(openButton, actions);
     return card;
   }));
   emptyState.hidden = visibleGuides.length > 0;
-  document.querySelector("#guide-total").textContent = String(allGuides.length).padStart(2, "0");
-  document.querySelector('[data-category="all"] span').textContent = String(allGuides.length).padStart(2, "0");
+  emptyState.textContent = guides.length === 0
+    ? "Каталог пуст. Добавь новый гайд, чтобы начать."
+    : "По этому запросу ничего не нашлось. Попробуй другое слово.";
+  document.querySelector("#guide-total").textContent = String(guides.length).padStart(2, "0");
+  document.querySelector('[data-category="all"] span').textContent = String(guides.length).padStart(2, "0");
+  exportGuidesButton.disabled = !publishedCatalogLoaded || catalogsMatch(guides, publishedGuides);
+  addGuideButton.disabled = !publishedCatalogLoaded;
+  deleteAllGuidesButton.disabled = !publishedCatalogLoaded;
+  deleteAllGuidesButton.hidden = guides.length === 0;
 }
 
 function openGuide(guide) {
@@ -271,17 +193,56 @@ function isGuide(value) {
     );
 }
 
-function readDrafts() {
+function isCatalog(value) {
+  return Array.isArray(value)
+    && value.every(isGuide)
+    && new Set(value.map((guide) => guide.id)).size === value.length;
+}
+
+function readLocalGuideChanges() {
   try {
-    const savedDrafts = JSON.parse(localStorage.getItem("dayz-guide-drafts") || "[]");
-    if (!Array.isArray(savedDrafts) || !savedDrafts.every(isGuide)) {
+    const savedCatalog = localStorage.getItem(catalogStorageKey);
+    if (savedCatalog !== null) {
+      savedCatalogDraft = JSON.parse(savedCatalog);
+      if (!isCatalog(savedCatalogDraft)) {
+        throw new Error("Локальный каталог имеет неверный формат.");
+      }
+      guides = savedCatalogDraft;
+      hasCatalogDraft = true;
+      return;
+    }
+
+    legacyDrafts = JSON.parse(localStorage.getItem("dayz-guide-drafts") || "[]");
+    if (!isCatalog(legacyDrafts)) {
       throw new Error("Сохранённые черновики имеют неверный формат.");
     }
-    drafts = savedDrafts;
   } catch (error) {
-    drafts = [];
-    showAppStatus(`Не удалось загрузить черновики: ${error.message}`);
+    savedCatalogDraft = null;
+    legacyDrafts = [];
+    guides = [];
+    showAppStatus(`Не удалось загрузить локальные изменения: ${error.message}`);
   }
+}
+
+function saveGuideCatalog(updatedGuides) {
+  const isDifferentFromPublished = !catalogsMatch(updatedGuides, publishedGuides);
+  try {
+    if (isDifferentFromPublished) {
+      localStorage.setItem(catalogStorageKey, JSON.stringify(updatedGuides));
+    } else {
+      localStorage.removeItem(catalogStorageKey);
+    }
+    localStorage.removeItem("dayz-guide-drafts");
+  } catch (error) {
+    showAppStatus(`Не удалось сохранить каталог в этом браузере: ${error.message}`);
+    return false;
+  }
+
+  guides = updatedGuides;
+  hasCatalogDraft = isDifferentFromPublished;
+  savedCatalogDraft = isDifferentFromPublished ? updatedGuides : null;
+  renderGuides();
+  return true;
 }
 
 async function loadCommunityGuides() {
@@ -292,7 +253,7 @@ async function loadCommunityGuides() {
       throw new Error(`сервер ответил ${response.status}`);
     }
     communityGuides = await response.json();
-    if (!Array.isArray(communityGuides) || !communityGuides.every(isGuide)) {
+    if (!isCatalog(communityGuides)) {
       throw new Error("файл guides.json имеет неверный формат");
     }
   } catch (error) {
@@ -300,18 +261,32 @@ async function loadCommunityGuides() {
     renderGuides();
     return;
   }
-  exportGuidesButton.disabled = false;
-  guides = [...builtInGuides, ...communityGuides];
+  publishedGuides = communityGuides;
+  publishedCatalogLoaded = true;
 
-  const publishedIds = new Set(communityGuides.map((guide) => guide.id));
-  const remainingDrafts = drafts.filter((guide) => !publishedIds.has(guide.id));
-  if (remainingDrafts.length !== drafts.length) {
-    try {
-      localStorage.setItem("dayz-guide-drafts", JSON.stringify(remainingDrafts));
-      drafts = remainingDrafts;
-    } catch (error) {
-      showAppStatus(`Гайды загружены, но опубликованные черновики не удалось удалить из этого браузера: ${error.message}`);
+  if (savedCatalogDraft === null) {
+    const mergedGuides = new Map(publishedGuides.map((guide) => [guide.id, guide]));
+    legacyDrafts.forEach((guide) => mergedGuides.set(guide.id, guide));
+    guides = [...mergedGuides.values()];
+  } else {
+    guides = savedCatalogDraft;
+  }
+
+  hasCatalogDraft = !catalogsMatch(guides, publishedGuides);
+  try {
+    if (hasCatalogDraft) {
+      localStorage.setItem(catalogStorageKey, JSON.stringify(guides));
+      localStorage.removeItem("dayz-guide-drafts");
+      savedCatalogDraft = guides;
+      showAppStatus("Есть неопубликованные изменения. Скачай guides.json и загрузи его в GitHub, чтобы обновить сайт для всех.");
+    } else {
+      localStorage.removeItem(catalogStorageKey);
+      localStorage.removeItem("dayz-guide-drafts");
+      savedCatalogDraft = null;
+      guides = publishedGuides;
     }
+  } catch (error) {
+    showAppStatus(`Каталог загружен, но локальный черновик не удалось обновить: ${error.message}`);
   }
   renderGuides();
 }
@@ -445,10 +420,63 @@ function createGuideId() {
   return `community-${window.crypto?.randomUUID?.() || `${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`}`;
 }
 
-document.querySelector("#add-guide-button").addEventListener("click", () => {
+function openNewGuideEditor() {
+  editingGuideId = null;
+  editorTitle.textContent = "Новый гайд";
+  saveGuideButton.textContent = "Сохранить гайд";
+  editorForm.reset();
+  clearCoverPreview();
+  editorSections.replaceChildren();
+  addEditorSection();
   editorFeedback.textContent = "";
   editorDialog.showModal();
-});
+}
+
+function editGuide(guideId) {
+  const guide = guides.find((item) => item.id === guideId);
+  if (!guide) {
+    showAppStatus("Не удалось найти гайд для редактирования.");
+    return;
+  }
+  editingGuideId = guideId;
+  editorTitle.textContent = "Редактировать гайд";
+  saveGuideButton.textContent = "Сохранить изменения";
+  editorForm.reset();
+  editorForm.elements.namedItem("title").value = guide.title;
+  editorForm.elements.namedItem("category").value = guide.category;
+  editorForm.elements.namedItem("summary").value = guide.summary;
+  clearCoverPreview();
+  if (guide.coverImage) {
+    coverPreview.src = guide.coverImage;
+    coverPreview.hidden = false;
+  }
+  editorSections.replaceChildren();
+  guide.sections.forEach((section) => addEditorSection(section));
+  editorFeedback.textContent = "";
+  editorDialog.showModal();
+}
+
+function deleteGuide(guideId) {
+  const guide = guides.find((item) => item.id === guideId);
+  if (!guide || !window.confirm(`Удалить гайд «${guide.title}»? Изменение пока сохранится только в этом браузере.`)) {
+    return;
+  }
+  if (saveGuideCatalog(guides.filter((item) => item.id !== guideId))) {
+    showAppStatus("Гайд удалён из локального каталога. Скачай guides.json и загрузи его в GitHub, чтобы опубликовать изменение.");
+  }
+}
+
+function deleteAllGuides() {
+  if (!guides.length || !window.confirm(`Удалить все ${guides.length} гайдов? Это изменит только локальный каталог до публикации guides.json.`)) {
+    return;
+  }
+  if (saveGuideCatalog([])) {
+    showAppStatus("Все гайды удалены из локального каталога. Скачай пустой guides.json и загрузи его в GitHub, чтобы опубликовать удаление.");
+  }
+}
+
+addGuideButton.addEventListener("click", openNewGuideEditor);
+deleteAllGuidesButton.addEventListener("click", deleteAllGuides);
 document.querySelector("#add-section-button").addEventListener("click", () => addEditorSection());
 editorForm.addEventListener("submit", async (event) => {
   event.preventDefault();
@@ -460,8 +488,10 @@ editorForm.addEventListener("submit", async (event) => {
       .map((paragraph) => paragraph.trim())
       .filter(Boolean)
   }));
+  const existingGuide = editingGuideId ? guides.find((guide) => guide.id === editingGuideId) : null;
   const newGuide = {
-    id: createGuideId(),
+    ...(existingGuide || {}),
+    id: editingGuideId || createGuideId(),
     category: formData.get("category"),
     title: formData.get("title").trim(),
     summary: formData.get("summary").trim(),
@@ -475,15 +505,23 @@ editorForm.addEventListener("submit", async (event) => {
       editorFeedback.textContent = "Сжимаю изображение перед сохранением…";
       newGuide.coverImage = await compressCoverImage(coverFile);
     }
-    const updatedDrafts = [...drafts, newGuide];
-    localStorage.setItem("dayz-guide-drafts", JSON.stringify(updatedDrafts));
-    drafts = updatedDrafts;
-    renderGuides();
-    editorFeedback.textContent = "Черновик сохранён. Обложка включена в guides.json; скачай файл и добавь его в репозиторий GitHub для публикации.";
+    const updatedGuides = editingGuideId
+      ? guides.map((guide) => guide.id === editingGuideId ? newGuide : guide)
+      : [...guides, newGuide];
+    if (!saveGuideCatalog(updatedGuides)) return;
+    const wasEditing = Boolean(editingGuideId);
+    showAppStatus(wasEditing
+      ? "Изменения сохранены в этом браузере. Скачай guides.json и загрузи его в GitHub для публикации."
+      : "Гайд сохранён в этом браузере. Скачай guides.json и загрузи его в GitHub для публикации.");
     editorForm.reset();
     clearCoverPreview();
     editorSections.replaceChildren();
     addEditorSection();
+    editingGuideId = null;
+    editorTitle.textContent = "Новый гайд";
+    saveGuideButton.textContent = "Сохранить гайд";
+    if (wasEditing) editorDialog.close();
+    else editorFeedback.textContent = "Гайд сохранён. Его можно редактировать или удалить из карточки.";
   } catch (error) {
     editorFeedback.textContent = `Не удалось сохранить черновик: ${error.message}`;
   } finally {
@@ -492,18 +530,17 @@ editorForm.addEventListener("submit", async (event) => {
 });
 
 exportGuidesButton.addEventListener("click", () => {
-  const customGuides = drafts.concat(guides.filter((guide) => guide.id));
-  const uniqueGuides = [...new Map(customGuides.map((guide) => [guide.id, guide])).values()];
-  const file = new Blob([`${JSON.stringify(uniqueGuides, null, 2)}\n`], { type: "application/json" });
+  const file = new Blob([`${JSON.stringify(guides, null, 2)}\n`], { type: "application/json" });
   const downloadUrl = URL.createObjectURL(file);
   const link = document.createElement("a");
   link.href = downloadUrl;
   link.download = "guides.json";
   link.click();
   setTimeout(() => URL.revokeObjectURL(downloadUrl), 1000);
-  editorFeedback.textContent = "Файл скачан. Загрузи его в корень репозитория GitHub вместо старого guides.json и сохрани изменения. Обложки уже вложены в файл.";
+  showAppStatus("Файл скачан. Загрузи его в корень репозитория GitHub вместо старого guides.json и сохрани изменения. Обложки уже вложены в файл.");
 });
 
-readDrafts();
+readLocalGuideChanges();
+renderGuides();
 addEditorSection();
 loadCommunityGuides();
